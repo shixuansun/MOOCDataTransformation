@@ -18,7 +18,9 @@ class JsonSource {
 private:
     vector<ColumnConfig> eventColumnsConfig;
     TabularData eventsTabular;
-    vector<int> errorLines;
+    vector<int> parsingErrorLines;
+    vector<int> saveErrorLines;
+
 private:
     // Currently, the schema is hard coded in this function for simplicity. In future, the schema should be input by
     // caller.

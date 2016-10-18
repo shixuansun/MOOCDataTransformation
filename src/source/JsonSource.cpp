@@ -95,14 +95,19 @@ void JsonSource::ProcessFile(const string file)
 
     string str;
     int count = 0;
-    while (std::getline(inputStream, str))
+    int max = 1000000;
+    while (std::getline(inputStream, str) && count < max)
     {
         if (count % 2000 == 0) {
             cout << count << " rows have been processed." << endl;
         }
         Process(str, ++count);
     }
+    
 
+    cout << "The number of lines processed: " << count << endl;
+    cout << "The number of lines can not be parsed: " << parsingErrorLines.size() << endl;
+    cout << "The number of lines can not be saved: " << saveErrorLines.size() << endl;
     timeval end;
     gettimeofday(&end, NULL);
     cout << "The elapsed time of reading log file: " << end.tv_sec-start.tv_sec << " seconds." << endl;
@@ -118,7 +123,7 @@ void JsonSource::Process(const string& jsonObject, const int line) {
         // report to the user the failure and their locations in the document.
         cerr << "Failed to parse configuration line " << line << endl;
         cerr << reader.getFormattedErrorMessages() << endl;
-        errorLines.push_back(line);
+        parsingErrorLines.push_back(line);
         return;
     }
 
@@ -143,7 +148,6 @@ void JsonSource::Process(const string& jsonObject, const int line) {
         eventsTabular.NewRow();
     }
     catch (exception e) {
-        cerr << e.what() << endl;
-        errorLines.push_back(line);
+        saveErrorLines.push_back(line);
     }
 }

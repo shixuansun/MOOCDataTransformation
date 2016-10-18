@@ -37,7 +37,7 @@ int main() {
 //    else
 //        cout << "Is not object" << endl;
 //    cout << root << endl;
-    string file = "../input.json";
+    string file = "/home/shixuan_sun/data/mitx-24.00x-2013-sond/log_data/MITx-24.00x-2013_SOND___2014_08_17___tracking_log.json";
     JsonSource jsonSrc;
     jsonSrc.ProcessFile(file);
     return 0;
