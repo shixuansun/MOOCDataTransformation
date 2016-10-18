@@ -50,6 +50,11 @@ void TabularData::SetData(const size_t colIdx, const char *value) {
     strcpy(columnString->GetCurrentCursor(), value);
 }
 
+void TabularData::SetData(const size_t colIdx, const string& value) {
+    ColumnData<char>* columnString = (ColumnData<char>*) columns[colIdx];
+    copy(value.begin(), value.end(), columnString->GetCurrentCursor());
+}
+
 void TabularData::SetData(const size_t colIdx, const int value) {
     ColumnData<int>* columnInteger = (ColumnData<int>*) columns[colIdx];
     *(columnInteger->GetCurrentCursor()) = value;

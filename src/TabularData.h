@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 class TabularData {
@@ -27,6 +28,7 @@ public:
     void AddColumn(string colName, DataType dataType, const size_t colLength);
     void SetData(const size_t colIdx, const int value);
     void SetData(const size_t colIdx, const char* value);
+    void SetData(const size_t colIdx, const string& value);
     void NewRow();
 };
 

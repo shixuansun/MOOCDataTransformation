@@ -100,6 +100,7 @@ void JsonSource::ProcessFile(const string file)
         if (count % 2000 == 0) {
             cout << count << " rows have been processed." << endl;
         }
+        
         Process(str, ++count);
     }
 
@@ -123,7 +124,6 @@ void JsonSource::Process(const string& jsonObject, const int line) {
     }
 
     try {
-
         for (int i = 0; i < eventColumnsConfig.size(); ++i) {
             switch (eventColumnsConfig[i].dataType)
             {
@@ -133,8 +133,7 @@ void JsonSource::Process(const string& jsonObject, const int line) {
                     break;
                 }
                 case DataType::String: {
-                    const char* res = root.get(eventColumnsConfig[i].colName, "").asCString();
-                    eventsTabular.SetData(i, res);
+                    eventsTabular.SetData(i, root.get(eventColumnsConfig[i].colName, "").toStyledString());
                     break;
                 }
             }
@@ -143,7 +142,6 @@ void JsonSource::Process(const string& jsonObject, const int line) {
         eventsTabular.NewRow();
     }
     catch (exception e) {
-        cerr << e.what() << endl;
         errorLines.push_back(line);
     }
 }
